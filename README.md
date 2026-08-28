@@ -319,9 +319,13 @@ assets/screenshots/
 Suggested screenshots:
 
 1. `home-page.png`
+![alt text](main_interface.png.png)
 2. `single-persona-response.png`
+![alt text](single-persona_response.png)
 3. `multiple-persona-response.png`
+![alt text](multiple-persona-response.png)
 4. `comparison-table.png`
+![alt text](<Advice_ comparison-table.png>)
 
 Then add them to this README using Markdown, for example:
 
@@ -381,12 +385,9 @@ The demo video should demonstrate:
 
 ## 18. Team Members
 
-Add the project team members here:
-
-- Name 1
-- Name 2
-- Name 3
-- Name 4
+Add the project Individual member here:
+AKULA AJAY
+EN ROLL NO:92410133025
 
 ## 19. Learning Outcome
 
