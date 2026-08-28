@@ -377,7 +377,7 @@ The demo video should demonstrate:
 9. Comparison table
 10. Brief explanation of the Prompt Card and prompt flow
 
-**Demo Video Link:** Add your link here.
+**Demo Video Link:** https://drive.google.com/file/d/1llrvDPt867JaGer5mi75i0AkemWUZwYC/view?usp=sharing
 
 ## 17. GitHub Repository
 
