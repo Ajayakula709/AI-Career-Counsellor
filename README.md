@@ -381,13 +381,13 @@ The demo video should demonstrate:
 
 ## 17. GitHub Repository
 
-**GitHub Repository:** Add your GitHub link here.
+**GitHub Repository:** https://github.com/Ajayakula709/AI-Career-Counsellor.git
 
 ## 18. Team Members
 
 Add the project Individual member here:
-AKULA AJAY
-EN ROLL NO:92410133025
+AJAY AKULA
+ENROLL_NO:92410133025
 
 ## 19. Learning Outcome
 
