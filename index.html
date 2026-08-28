@@ -1,0 +1,3279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Career Counsellor</title>
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --purple: #5d3bea;
+            --purple-light: #ebe8ff;
+            --dark: #10204a;
+            --muted: #53627e;
+            --background: #f5f7fb;
+            --white: #ffffff;
+            --border: #dfe4ee;
+            --success: #067647;
+            --error: #b42318;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--dark);
+            line-height: 1.45;
+        }
+
+        button,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: 1110px;
+            max-width: calc(100% - 32px);
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .topbar {
+            height: 72px;
+            background: linear-gradient(
+                90deg,
+                #5738e8,
+                #783ce9
+            );
+            color: white;
+        }
+
+        .topbar .container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: white;
+            color: #5b3ce5;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+        }
+
+        .powered {
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            text-align: center;
+            padding: 49px 0 39px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--purple-light);
+            color: #5b3ee1;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 13px;
+        }
+
+        .hero h1 {
+            font-size: 43px;
+            line-height: 1.08;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 span {
+            color: #6252ee;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 13px auto 0;
+            color: #3e5478;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           MAIN GRID
+        ===================================================== */
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.7fr 0.95fr;
+            gap: 19px;
+            align-items: start;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            box-shadow: 0 7px 25px rgba(31, 43, 77, 0.06);
+            overflow: hidden;
+        }
+
+        .card-head {
+            padding: 19px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-head h2 {
+            font-size: 16px;
+        }
+
+        .card-head p {
+            font-size: 10px;
+            color: #64728d;
+            margin-top: 4px;
+        }
+
+        .card-body {
+            padding: 18px 20px;
+        }
+
+
+        /* =====================================================
+           QUESTION
+        ===================================================== */
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+
+        .label {
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .counter {
+            font-size: 9px;
+            color: #68758c;
+        }
+
+        textarea {
+            width: 100%;
+            height: 127px;
+
+            border: 1px solid #ccd5e2;
+            border-radius: 9px;
+
+            padding: 12px;
+
+            font-size: 11px;
+
+            color: #172443;
+
+            background: #fbfcfe;
+
+            resize: vertical;
+
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #654ce9;
+
+            box-shadow:
+                0 0 0 3px #eeeaff;
+        }
+
+
+        /* =====================================================
+           EXAMPLE QUESTIONS
+        ===================================================== */
+
+        .examples {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 8px 0 17px;
+        }
+
+        .example {
+            border: 1px solid #d7dce6;
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 5px 9px;
+
+            font-size: 8px;
+
+            color: #3e4b66;
+
+            cursor: pointer;
+        }
+
+        .example:hover {
+            border-color: #654ce9;
+            color: #5d42df;
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .profile label {
+            display: block;
+            font-size: 9px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile select {
+            width: 100%;
+
+            border: 1px solid #d2d9e4;
+
+            border-radius: 7px;
+
+            background: white;
+
+            padding: 7px;
+
+            font-size: 9px;
+
+            color: #33405b;
+        }
+
+
+        /* =====================================================
+           COUNSELLORS
+        ===================================================== */
+
+        .select-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 9px;
+        }
+
+        .select-row strong {
+            font-size: 10px;
+        }
+
+        .select-row span {
+            font-size: 9px;
+            color: #68758c;
+        }
+
+        .personas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .persona {
+            display: flex;
+
+            gap: 8px;
+
+            padding: 10px;
+
+            border: 1.5px solid #d4dae6;
+
+            border-radius: 10px;
+
+            background: white;
+
+            cursor: pointer;
+
+            min-height: 60px;
+
+            transition: 0.15s;
+        }
+
+        .persona:hover {
+            transform: translateY(-1px);
+        }
+
+        .persona.selected {
+            border-color: #6550ef;
+            background: #faf9ff;
+        }
+
+        .tick {
+            width: 16px;
+            height: 16px;
+
+            border: 1px solid #bac2d0;
+
+            border-radius: 4px;
+
+            flex: none;
+
+            margin-top: 1px;
+        }
+
+        .persona.selected .tick {
+            background: #654fe9;
+
+            border-color: #654fe9;
+
+            position: relative;
+        }
+
+        .persona.selected .tick::after {
+            content: "✓";
+
+            color: white;
+
+            position: absolute;
+
+            left: 3px;
+
+            top: -2px;
+
+            font-size: 11px;
+        }
+
+        .persona-icon {
+            width: 29px;
+            height: 29px;
+
+            background: #f0f2f7;
+
+            border-radius: 7px;
+
+            display: grid;
+
+            place-items: center;
+
+            flex: none;
+        }
+
+        .persona h3 {
+            font-size: 9px;
+        }
+
+        .persona p {
+            font-size: 7.5px;
+
+            color: #6c7890;
+
+            margin-top: 2px;
+
+            line-height: 1.3;
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .generate {
+            width: 100%;
+
+            margin-top: 14px;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #5d4ce9,
+                    #763fe9
+                );
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .generate:hover {
+            opacity: 0.95;
+        }
+
+        .generate:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .loading {
+            text-align: center;
+
+            color: #6046df;
+
+            font-size: 9px;
+
+            margin-top: 8px;
+
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .loader {
+            display: inline-block;
+
+            width: 12px;
+            height: 12px;
+
+            border: 2px solid #ddd;
+
+            border-top-color: #6046df;
+
+            border-radius: 50%;
+
+            animation:
+                spin 0.8s linear infinite;
+
+            vertical-align: -2px;
+
+            margin-right: 5px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status {
+            font-size: 9px;
+
+            margin-top: 7px;
+
+            min-height: 19px;
+        }
+
+        .status.ok,
+        .status.err {
+            padding: 7px;
+            border-radius: 6px;
+        }
+
+        .status.ok {
+            background: #ecfdf3;
+
+            color: #067647;
+
+            border: 1px solid #abefc6;
+        }
+
+        .status.err {
+            background: #fff1f0;
+
+            color: #b42318;
+
+            border: 1px solid #fecdca;
+        }
+
+
+        /* =====================================================
+           PROMPT CARD
+        ===================================================== */
+
+        .prompt-list {
+            display: grid;
+            gap: 7px;
+        }
+
+        .prompt {
+            background: #f9fafc;
+
+            border: 1px solid #dfe4ec;
+
+            border-radius: 8px;
+
+            padding: 9px;
+        }
+
+        .prompt b {
+            display: block;
+
+            color: #5b43df;
+
+            font-size: 8px;
+
+            letter-spacing: 0.6px;
+
+            margin-bottom: 2px;
+        }
+
+        .prompt span {
+            font-size: 8px;
+
+            color: #53627c;
+        }
+
+        .api-note {
+            margin-top: 9px;
+
+            padding: 8px;
+
+            border: 1px solid #f0bda4;
+
+            background: #fff8f4;
+
+            color: #963b19;
+
+            border-radius: 7px;
+
+            font-size: 7.5px;
+        }
+
+
+        /* =====================================================
+           RESULTS
+        ===================================================== */
+
+        .results {
+            margin-top: 21px;
+        }
+
+        .results-head {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: end;
+
+            margin-bottom: 9px;
+        }
+
+        .results-head h2 {
+            font-size: 17px;
+        }
+
+        .results-head p {
+            font-size: 9px;
+
+            color: #68758c;
+
+            margin-top: 3px;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .result-buttons button {
+            border: 1px solid #d4dae5;
+
+            background: white;
+
+            border-radius: 6px;
+
+            padding: 6px 9px;
+
+            font-size: 8px;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           RESPONSE CARDS
+        ===================================================== */
+
+        .responses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .response {
+            background: white;
+            border: 1px solid #dce1e9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .response-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-bottom: 1px solid #e3e7ee;
+            background: #fafbff;
+        }
+
+        .response-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #10204a;
+        }
+
+        .response-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            background: #f0edff;
+            display: grid;
+            place-items: center;
+            font-size: 15px;
+            flex: none;
+        }
+
+        .copy {
+            border: 1px solid #cfd6e0;
+            background: white;
+            border-radius: 6px;
+            padding: 5px 9px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #34415c;
+            cursor: pointer;
+        }
+
+        .copy:hover {
+            border-color: #654ce9;
+            color: #5d42df;
+            background: #faf9ff;
+        }
+
+        .response-body {
+            padding: 16px 18px;
+            font-size: 14px;
+            line-height: 1.55;
+            color: #243452;
+            min-height: 0;
+        }
+
+        .advice-section {
+            margin: 0 0 13px;
+        }
+
+        .advice-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .advice-label {
+            display: block;
+            margin-bottom: 4px;
+            color: #4f3fd1;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .advice-text {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.55;
+            color: #243452;
+            overflow-wrap: anywhere;
+        }
+
+        .advice-text ul,
+        .advice-text ol {
+            margin: 4px 0 0 19px;
+            padding: 0;
+        }
+
+        .advice-text li {
+            margin: 2px 0;
+        }
+
+        /* =====================================================
+           ACTION PLAN
+        ===================================================== */
+
+        .action {
+            margin-top: 11px;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            padding: 12px;
+        }
+
+        .action h3 {
+            font-size: 12px;
+
+            margin-bottom: 9px;
+        }
+
+        .action-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 8px;
+        }
+
+        .action-item {
+            border: 1px solid #e0e4eb;
+
+            background: #fafbfc;
+
+            border-radius: 7px;
+
+            padding: 8px;
+        }
+
+        .action-item b {
+            font-size: 8px;
+
+            color: #5d45df;
+        }
+
+        .action-item p {
+            font-size: 7.5px;
+
+            color: #65718a;
+
+            margin-top: 2px;
+        }
+
+
+        /* =====================================================
+           COMPARISON TABLE
+        ===================================================== */
+
+        .compare {
+            margin-top: 11px;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: auto;
+        }
+
+        .compare h3 {
+            font-size: 12px;
+
+            padding: 11px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+
+            min-width: 780px;
+
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+
+            border-bottom: 1px solid #e1e5eb;
+
+            border-right: 1px solid #e1e5eb;
+
+            text-align: left;
+
+            vertical-align: top;
+
+            font-size: 7.5px;
+        }
+
+        th {
+            background: #f7f8fb;
+        }
+
+        .note {
+            margin: 9px;
+
+            padding: 8px;
+
+            background: #f1f7ff;
+
+            border: 1px solid #d8e8ff;
+
+            color: #24437d;
+
+            border-radius: 6px;
+
+            font-size: 7.5px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            text-align: center;
+
+            padding: 20px;
+
+            color: #7b8598;
+
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                max-width:
+                    calc(100% - 24px);
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 560px) {
+
+            .personas,
+            .responses,
+            .profile {
+                grid-template-columns: 1fr;
+            }
+
+            .response-title {
+                font-size: 13px;
+            }
+
+            .response-body {
+                padding: 14px;
+            }
+
+            .advice-text {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+
+            .hero {
+                padding: 36px 0;
+            }
+
+            .hero h1 {
+                font-size: 29px;
+            }
+
+            .hero p {
+                font-size: 12px;
+            }
+
+            .powered {
+                display: none;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        /* =====================================================
+           PRINT
+        ===================================================== */
+
+        @media print {
+
+            .topbar {
+                print-color-adjust: exact;
+            }
+
+            .generate,
+            .loading,
+            .status,
+            .result-buttons,
+            .copy {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="container">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                AI
+            </div>
+
+            <span>
+                AI Career Counsellor
+            </span>
+
+        </div>
+
+        <div class="powered">
+            Powered by Google Gemini
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-badge">
+        ✦ Gemini-Powered Career Guidance
+    </div>
+
+    <h1>
+
+        Your Career.<br>
+
+        <span>
+            Multiple Expert Perspectives.
+        </span>
+
+    </h1>
+
+    <p>
+
+        Ask one career question and receive
+        personalized guidance from technical,
+        HR, academic and entrepreneurship
+        counsellors.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     MAIN AREA
+===================================================== -->
+
+<div class="main-grid">
+
+
+<!-- =====================================================
+     QUESTION CARD
+===================================================== -->
+
+<section class="card">
+
+    <div class="card-head">
+
+        <h2>
+            Ask Your Career Question
+        </h2>
+
+        <p>
+            Select one or multiple AI counsellors.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="label-row">
+
+            <span class="label">
+                Your Question
+            </span>
+
+            <span
+                class="counter"
+                id="counter"
+            >
+                0 / 1200
+            </span>
+
+        </div>
+
+
+        <textarea
+            id="question"
+            maxlength="1200"
+            placeholder="Example: I know Python but don't have any projects. What should I do?"
+        ></textarea>
+
+
+
+        <!-- Example Questions -->
+
+        <div class="examples">
+
+            <button
+                class="example"
+                onclick="example(
+                    'Should I prepare for placements or pursue higher studies?'
+                )"
+            >
+                Should I prepare for placements
+                or higher studies?
+            </button>
+
+
+            <button
+                class="example"
+                onclick="example(
+                    'I know Python but don’t have projects. What should I do?'
+                )"
+            >
+                I know Python but don't
+                have projects?
+            </button>
+
+
+            <button
+                class="example"
+                onclick="example(
+                    'AI Engineer or Data Scientist or Software Developer?'
+                )"
+            >
+                AI Engineer or Data Scientist
+                or Software Developer?
+            </button>
+
+        </div>
+
+
+
+        <!-- Student Profile -->
+
+        <div class="profile">
+
+            <div>
+
+                <label>
+                    Current Stage
+                </label>
+
+                <select id="stage">
+
+                    <option>
+                        College Student
+                    </option>
+
+                    <option>
+                        Final-Year Student
+                    </option>
+
+                    <option>
+                        Recent Graduate
+                    </option>
+
+                    <option>
+                        Working Professional
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Primary Goal
+                </label>
+
+                <select id="goal">
+
+                    <option>
+                        Get a Job
+                    </option>
+
+                    <option>
+                        Get an Internship
+                    </option>
+
+                    <option>
+                        Higher Studies
+                    </option>
+
+                    <option>
+                        Start a Business
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Counsellors -->
+
+        <div class="select-row">
+
+            <strong>
+                Select Counsellors
+            </strong>
+
+            <span id="selectedCount">
+                4 selected
+            </span>
+
+        </div>
+
+
+        <div
+            class="personas"
+            id="personas"
+        ></div>
+
+
+        <button
+            class="generate"
+            id="generate"
+            onclick="getAdvice()"
+        >
+            Get Career Advice
+        </button>
+
+
+        <div
+            class="loading"
+            id="loading"
+        >
+
+            <span class="loader"></span>
+
+            Consulting selected AI counsellors...
+
+        </div>
+
+
+        <div
+            class="status"
+            id="status"
+        ></div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROMPT CARD
+===================================================== -->
+
+<aside class="card">
+
+    <div class="card-head">
+
+        <h2>
+            Persona Prompt Card
+        </h2>
+
+        <p>
+            Six elements control every AI persona.
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="prompt-list">
+
+
+            <div class="prompt">
+
+                <b>
+                    ROLE
+                </b>
+
+                <span>
+                    Defines who the AI should act as.
+                </span>
+
+            </div>
+
+
+            <div class="prompt">
+
+                <b>
+                    AUDIENCE
+                </b>
+
+                <span>
+                    Defines who receives the advice.
+                </span>
+
+            </div>
+
+
+            <div class="prompt">
+
+                <b>
+                    CONTEXT
+                </b>
+
+                <span>
+                    Provides relevant career background.
+                </span>
+
+            </div>
+
+
+            <div class="prompt">
+
+                <b>
+                    FORMAT
+                </b>
+
+                <span>
+                    Controls how the response is presented.
+                </span>
+
+            </div>
+
+
+            <div class="prompt">
+
+                <b>
+                    CONSTRAINTS
+                </b>
+
+                <span>
+                    Controls limitations and prevents
+                    unsupported claims.
+                </span>
+
+            </div>
+
+
+            <div class="prompt">
+
+                <b>
+                    LANGUAGE
+                </b>
+
+                <span>
+                    Uses simple, student-friendly English.
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="api-note">
+
+            <b>
+                API Key:
+            </b>
+
+            Configured locally inside
+            the JavaScript section.
+
+            Do NOT publish your API key
+            on GitHub.
+
+        </div>
+
+
+    </div>
+
+</aside>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     RESULTS
+===================================================== -->
+
+<section class="results" id="results">
+
+
+    <div class="results-head">
+
+        <div>
+
+            <h2>
+                AI Expert Advice
+            </h2>
+
+            <p id="subtitle">
+
+                Responses from your selected
+                counsellors will appear here.
+
+            </p>
+
+        </div>
+
+
+        <div class="result-buttons">
+
+            <button onclick="copyAll()">
+                Copy All
+            </button>
+
+
+            <button onclick="window.print()">
+                Print / PDF
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <div
+        class="responses"
+        id="responses"
+    >
+
+
+        <!-- Technical -->
+
+        <article class="response">
+
+            <div class="response-head">
+
+                <div class="response-title">
+
+                    <div class="response-icon">
+                        💻
+                    </div>
+
+                    Technical Career Counsellor
+
+                </div>
+
+
+                <button class="copy">
+                    Copy
+                </button>
+
+            </div>
+
+
+            <div class="response-body">
+
+                Your AI advice will appear here...
+
+            </div>
+
+        </article>
+
+
+
+        <!-- HR -->
+
+        <article class="response">
+
+            <div class="response-head">
+
+                <div class="response-title">
+
+                    <div class="response-icon">
+                        🧑‍💼
+                    </div>
+
+                    HR & Placement Counsellor
+
+                </div>
+
+
+                <button class="copy">
+                    Copy
+                </button>
+
+            </div>
+
+
+            <div class="response-body">
+
+                Your AI advice will appear here...
+
+            </div>
+
+        </article>
+
+
+
+        <!-- Academic -->
+
+        <article class="response">
+
+            <div class="response-head">
+
+                <div class="response-title">
+
+                    <div class="response-icon">
+                        🎓
+                    </div>
+
+                    Academic & Research Counsellor
+
+                </div>
+
+
+                <button class="copy">
+                    Copy
+                </button>
+
+            </div>
+
+
+            <div class="response-body">
+
+                Your AI advice will appear here...
+
+            </div>
+
+        </article>
+
+
+
+        <!-- Entrepreneurship -->
+
+        <article class="response">
+
+            <div class="response-head">
+
+                <div class="response-title">
+
+                    <div class="response-icon">
+                        🚀
+                    </div>
+
+                    Entrepreneurship Counsellor
+
+                </div>
+
+
+                <button class="copy">
+                    Copy
+                </button>
+
+            </div>
+
+
+            <div class="response-body">
+
+                Your AI advice will appear here...
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ACTION PLAN
+    ====================================================== -->
+
+    <div class="action">
+
+        <h3>
+            🚀 Career Action Plan
+        </h3>
+
+
+        <div
+            class="action-grid"
+            id="actionGrid"
+        >
+
+            <div class="action-item">
+
+                <b>
+                    01 · Understand
+                </b>
+
+                <p>
+                    Clarify your target role
+                    and current skill gap.
+                </p>
+
+            </div>
+
+
+            <div class="action-item">
+
+                <b>
+                    02 · Build
+                </b>
+
+                <p>
+                    Create evidence through
+                    projects, internships
+                    or research.
+                </p>
+
+            </div>
+
+
+            <div class="action-item">
+
+                <b>
+                    03 · Prepare
+                </b>
+
+                <p>
+                    Improve resume, interview
+                    and communication skills.
+                </p>
+
+            </div>
+
+
+            <div class="action-item">
+
+                <b>
+                    04 · Apply
+                </b>
+
+                <p>
+                    Track opportunities and
+                    consistently take action.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         COMPARISON
+    ====================================================== -->
+
+    <div class="compare">
+
+        <h3>
+            Advice Comparison
+        </h3>
+
+
+        <table id="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Aspect
+                    </th>
+
+                    <th>
+                        Technical
+                    </th>
+
+                    <th>
+                        HR & Placement
+                    </th>
+
+                    <th>
+                        Academic & Research
+                    </th>
+
+                    <th>
+                        Entrepreneurship
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        <b>Key Focus</b>
+                    </td>
+
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>Top Recommendation</b>
+                    </td>
+
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>Skills to Develop</b>
+                    </td>
+
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>Next Steps</b>
+                    </td>
+
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <div class="note">
+
+            ⓘ
+
+            <b>
+                Remember:
+            </b>
+
+            This AI advice is for guidance only.
+            Your passion, consistency and hard work
+            are the ultimate keys to success!
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<footer>
+
+    AI Career Counsellor • Gemini API •
+    Single HTML Application
+
+</footer>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   GEMINI API CONFIGURATION
+========================================================= */
+
+/*
+   IMPORTANT
+   ---------------------------------------------------------
+   Paste your REAL Gemini API key between the quotes.
+
+   Example:
+   const GEMINI_API_KEY = "YOUR_REAL_GEMINI_API_KEY";
+
+   Keep the key only in this local file.
+   Do NOT upload your API key to GitHub.
+*/
+
+const GEMINI_API_KEY = "AQ.Ab8RN6IFInFVJTbQq8XxlGjNxF_CjSRLGupOJ0FDAxgxrrK-Hw";
+
+
+/*
+   Gemini model
+*/
+const GEMINI_MODEL = "gemini-3.6-flash";
+
+
+/*
+   Gemini REST API URL
+*/
+const GEMINI_URL =
+    "https://generativelanguage.googleapis.com/v1beta/models/"
+    + GEMINI_MODEL
+    + ":generateContent";
+
+
+
+/* =========================================================
+   PERSONA DEFINITIONS
+========================================================= */
+
+const PERSONAS = {
+
+    technical: {
+
+        name:
+            "Technical Career Counsellor",
+
+        short:
+            "Technical",
+
+        icon:
+            "💻",
+
+        description:
+            "Programming, AI/ML, software development, skills and projects.",
+
+        role:
+            "Senior Technical Career Counsellor",
+
+        audience:
+            "College students and early-career engineering and computer science students.",
+
+        context:
+            "Programming, AI/ML, software engineering, projects, portfolios and technical career paths.",
+
+        format:
+            "Key Focus, Top Recommendation, Skills to Develop, Next Steps and Detailed Guidance.",
+
+        constraints:
+            "Give practical advice. Do not guarantee jobs or salaries. Do not invent facts.",
+
+        language:
+            "Simple English"
+
+    },
+
+
+    hr: {
+
+        name:
+            "HR & Placement Counsellor",
+
+        short:
+            "HR & Placement",
+
+        icon:
+            "🧑‍💼",
+
+        description:
+            "Resume, interviews, employability, internships and placements.",
+
+        role:
+            "Senior HR and Campus Placement Counsellor",
+
+        audience:
+            "College students and recent graduates preparing for recruitment.",
+
+        context:
+            "Resume quality, interviews, communication, internships, employer expectations and placement strategy.",
+
+        format:
+            "Key Focus, Top Recommendation, Employability Skills, Next Steps and Hiring Guidance.",
+
+        constraints:
+            "Do not guarantee selection or salary. Give measurable preparation steps.",
+
+        language:
+            "Simple English"
+
+    },
+
+
+    academic: {
+
+        name:
+            "Academic & Research Counsellor",
+
+        short:
+            "Academic & Research",
+
+        icon:
+            "🎓",
+
+        description:
+            "Higher studies, research, MS/M.Tech, PhD and certifications.",
+
+        role:
+            "Academic and Research Career Counsellor",
+
+        audience:
+            "Students considering postgraduate education and research.",
+
+        context:
+            "Higher studies, research interests, specialization, academic preparation and certifications.",
+
+        format:
+            "Key Focus, Top Recommendation, Skills to Develop, Next Steps and Academic Guidance.",
+
+        constraints:
+            "Do not guarantee admission, scholarships or research outcomes.",
+
+        language:
+            "Simple English"
+
+    },
+
+
+    entrepreneurship: {
+
+        name:
+            "Entrepreneurship Counsellor",
+
+        short:
+            "Entrepreneurship",
+
+        icon:
+            "🚀",
+
+        description:
+            "Startups, products, freelancing and entrepreneurship.",
+
+        role:
+            "Startup and Entrepreneurship Career Counsellor",
+
+        audience:
+            "Students interested in startups, products, freelancing or independent careers.",
+
+        context:
+            "Problem discovery, customer validation, MVPs, product skills, freelancing and startup experimentation.",
+
+        format:
+            "Key Focus, Top Recommendation, Skills to Develop, Next Steps and Validation Guidance.",
+
+        constraints:
+            "Do not promise business success or income. Encourage validation before investment.",
+
+        language:
+            "Simple English"
+
+    }
+
+};
+
+
+
+/* =========================================================
+   SELECTED PERSONAS
+========================================================= */
+
+let selected =
+    new Set(
+        Object.keys(PERSONAS)
+    );
+
+
+
+/* =========================================================
+   RENDER PERSONAS
+========================================================= */
+
+function renderPersonas() {
+
+    const container =
+        document.getElementById(
+            "personas"
+        );
+
+
+    container.innerHTML = "";
+
+
+    Object.entries(
+        PERSONAS
+    ).forEach(
+        ([id, persona]) => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "persona selected";
+
+
+            div.dataset.id =
+                id;
+
+
+            div.innerHTML = `
+
+                <div class="tick"></div>
+
+                <div class="persona-icon">
+                    ${persona.icon}
+                </div>
+
+                <div>
+
+                    <h3>
+                        ${persona.name}
+                    </h3>
+
+                    <p>
+                        ${persona.description}
+                    </p>
+
+                </div>
+
+            `;
+
+
+            div.onclick =
+                function () {
+
+                    togglePersona(id);
+
+                };
+
+
+            container.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    updateCount();
+
+}
+
+
+
+/* =========================================================
+   TOGGLE PERSONA
+========================================================= */
+
+function togglePersona(id) {
+
+    if (
+        selected.has(id)
+    ) {
+
+        selected.delete(id);
+
+    } else {
+
+        selected.add(id);
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".persona"
+        )
+        .forEach(
+            card => {
+
+                card.classList.toggle(
+                    "selected",
+                    selected.has(
+                        card.dataset.id
+                    )
+                );
+
+            }
+        );
+
+
+    updateCount();
+
+}
+
+
+
+/* =========================================================
+   SELECTED COUNT
+========================================================= */
+
+function updateCount() {
+
+    document.getElementById(
+        "selectedCount"
+    ).textContent =
+        selected.size +
+        " selected";
+
+}
+
+
+
+/* =========================================================
+   EXAMPLE QUESTION
+========================================================= */
+
+function example(text) {
+
+    const textarea =
+        document.getElementById(
+            "question"
+        );
+
+
+    textarea.value =
+        text;
+
+
+    updateCounter();
+
+
+    textarea.focus();
+
+}
+
+
+
+/* =========================================================
+   CHARACTER COUNTER
+========================================================= */
+
+function updateCounter() {
+
+    const textarea =
+        document.getElementById(
+            "question"
+        );
+
+
+    document.getElementById(
+        "counter"
+    ).textContent =
+        textarea.value.length +
+        " / 1200";
+
+}
+
+
+document
+    .getElementById(
+        "question"
+    )
+    .addEventListener(
+        "input",
+        updateCounter
+    );
+
+
+
+/* =========================================================
+   STATUS MESSAGE
+========================================================= */
+
+function setStatus(
+    message,
+    type = ""
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        "status " +
+        type;
+
+}
+
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    return String(
+        text ?? ""
+    )
+    .replace(
+        /[&<>"']/g,
+        character => ({
+
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+
+        })[character]
+    );
+
+}
+
+
+
+/* =========================================================
+   BUILD STRUCTURED PROMPT
+========================================================= */
+
+function buildPrompt(
+    question,
+    people
+) {
+
+    const currentStage =
+        document.getElementById(
+            "stage"
+        ).value;
+
+
+    const primaryGoal =
+        document.getElementById(
+            "goal"
+        ).value;
+
+
+    const personaCards =
+        people
+            .map(
+                (persona, index) => `
+
+PERSONA ${index + 1}
+
+ID:
+${persona.id}
+
+ROLE:
+${persona.role}
+
+AUDIENCE:
+${persona.audience}
+
+CONTEXT:
+${persona.context}
+
+FORMAT:
+${persona.format}
+
+CONSTRAINTS:
+${persona.constraints}
+
+LANGUAGE:
+${persona.language}
+
+--------------------------------
+`
+            )
+            .join("\n");
+
+
+    return `
+
+You are the AI engine for an AI Career Counsellor.
+
+USER PROFILE
+
+Current Stage:
+${currentStage}
+
+Primary Goal:
+${primaryGoal}
+
+
+USER QUESTION
+
+${question}
+
+
+SELECTED PERSONA PROMPT CARDS
+
+${personaCards}
+
+
+IMPORTANT INSTRUCTIONS
+
+1. Use Role + Audience + Context + Format + Constraints + Language + User Question.
+
+2. Every selected persona must provide a DISTINCT perspective. Do not repeat the same recommendation across personas unless the user facts clearly support it.
+
+3. Answer the user's exact question first. Do not answer a different or broader career question.
+
+4. Use ONLY the facts explicitly provided by the user. If important information is missing, state the assumption or explain what additional information would improve the advice.
+
+5. Never invent the user's skills, grades, experience, finances, location, job offers, interests, projects, or career goals.
+
+6. Do not present uncertain claims as facts. Avoid unsupported statements such as "this role has the highest hiring volume" unless the user provided evidence or the statement is clearly framed as a general possibility.
+
+7. Technical counsellor: focus on programming, DSA, software engineering, AI/ML, projects, GitHub/portfolio and technical preparation.
+
+8. HR & Placement counsellor: focus on resume, ATS-friendly presentation, communication, aptitude, interviews, internships and placement strategy.
+
+9. Academic & Research counsellor: focus on higher studies, specialization, research, MS/M.Tech/PhD preparation and academic fit.
+
+10. Entrepreneurship counsellor: focus on problem selection, customer validation, MVP/product building, freelancing and realistic startup experimentation.
+
+11. If the question asks to choose between options, compare the options using the user's stated goal and profile. Do not automatically recommend one option without explaining why.
+
+12. Give concrete, actionable advice. Include priorities and practical next steps that can actually be followed by a student.
+
+13. Do not guarantee jobs, salaries, admissions, scholarships, funding or business success.
+
+14. Use simple student-friendly English.
+
+15. Keep each field concise but useful:
+   - Key Focus: 1-2 sentences.
+   - Top Recommendation: 2-3 sentences.
+   - Skills to Develop: 3-6 specific skills or areas.
+   - Next Steps: 3-5 numbered or semicolon-separated actions.
+   - Detailed Guidance: 3-5 short sentences explaining the reasoning.
+
+16. Every required response field MUST contain meaningful content. Never return an empty string or "-".
+
+17. Return ONLY valid JSON.
+
+18. Include ONLY the selected persona IDs.
+
+REQUIRED JSON STRUCTURE
+
+{
+    "responses": [
+        {
+            "personaId": "technical",
+            "keyFocus": "",
+            "topRecommendation": "",
+            "skillsToDevelop": "",
+            "nextSteps": "",
+            "detailedGuidance": ""
+        }
+    ],
+
+    "comparison": [
+        {
+            "aspect": "Key Focus",
+            "values": [
+                {
+                    "personaId": "technical",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "aspect": "Top Recommendation",
+            "values": [
+                {
+                    "personaId": "technical",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "aspect": "Skills to Develop",
+            "values": [
+                {
+                    "personaId": "technical",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "aspect": "Next Steps",
+            "values": [
+                {
+                    "personaId": "technical",
+                    "value": ""
+                }
+            ]
+        }
+    ],
+
+    "actionPlan": [
+        {
+            "title": "Understand",
+            "description": ""
+        },
+        {
+            "title": "Build",
+            "description": ""
+        },
+        {
+            "title": "Prepare",
+            "description": ""
+        },
+        {
+            "title": "Apply",
+            "description": ""
+        }
+    ]
+}
+
+`;
+
+}
+
+
+
+/* =========================================================
+   GEMINI API REQUEST
+========================================================= */
+
+async function callGemini(
+    question,
+    people
+) {
+
+    const prompt =
+        buildPrompt(
+            question,
+            people
+        );
+
+
+    /*
+       ONE API REQUEST
+
+       All selected personas are sent
+       inside one structured prompt.
+    */
+
+    const response =
+        await fetch(
+            GEMINI_URL,
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json",
+
+                    "x-goog-api-key":
+                        GEMINI_API_KEY
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        contents: [
+
+                            {
+
+                                role:
+                                    "user",
+
+                                parts: [
+
+                                    {
+
+                                        text:
+                                            prompt
+
+                                    }
+
+                                ]
+
+                            }
+
+                        ],
+
+                        generationConfig: {
+
+                            responseMimeType:
+                                "application/json",
+
+                            maxOutputTokens:
+                                6000
+
+                        }
+
+                    })
+
+            }
+        );
+
+
+    /*
+       Convert response to JSON.
+    */
+
+    const data =
+        await response.json();
+
+
+    console.log(
+        "Gemini API response:",
+        data
+    );
+
+
+    /*
+       Handle API errors.
+    */
+
+    if (
+        !response.ok
+    ) {
+
+        throw new Error(
+            data?.error?.message ||
+            "Gemini API request failed."
+        );
+
+    }
+
+
+    /*
+       Extract Gemini text.
+    */
+
+    const text =
+        data
+            ?.candidates?.[0]
+            ?.content
+            ?.parts
+            ?.map(
+                part =>
+                    part.text || ""
+            )
+            .join("")
+            .trim();
+
+
+    if (!text) {
+
+        throw new Error(
+            "Gemini returned an empty response."
+        );
+
+    }
+
+
+    /*
+       Parse JSON returned by Gemini.
+    */
+
+    try {
+
+        return JSON.parse(
+            text
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Gemini returned:",
+            text
+        );
+
+        throw new Error(
+            "Gemini returned invalid JSON."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   RENDER AI RESPONSES
+========================================================= */
+
+function renderResponses(
+    result,
+    people
+) {
+
+    const responseMap =
+        Object.fromEntries(
+            (result.responses || []).map(
+                response => [
+                    response.personaId,
+                    response
+                ]
+            )
+        );
+
+    document.getElementById(
+        "responses"
+    ).innerHTML = people.map(persona => {
+
+        const response =
+            responseMap[persona.id] || {};
+
+        const fields = [
+            ["Key Focus", response.keyFocus],
+            ["Top Recommendation", response.topRecommendation],
+            ["Skills to Develop", response.skillsToDevelop],
+            ["Next Steps", response.nextSteps],
+            ["Detailed Guidance", response.detailedGuidance]
+        ];
+
+        const sections = fields.map(
+            ([label, value]) => {
+
+                const cleanValue =
+                    String(value || "").trim();
+
+                return `
+                    <section class="advice-section">
+                        <span class="advice-label">
+                            ${label}
+                        </span>
+                        <div class="advice-text">
+                            ${formatAdviceText(cleanValue)}
+                        </div>
+                    </section>
+                `;
+            }
+        ).join("");
+
+        return `
+            <article class="response">
+
+                <div class="response-head">
+
+                    <div class="response-title">
+
+                        <div class="response-icon">
+                            ${persona.icon}
+                        </div>
+
+                        ${escapeHTML(persona.name)}
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="copy"
+                        onclick="copyCard(this)"
+                    >
+                        Copy
+                    </button>
+
+                </div>
+
+                <div class="response-body">
+                    ${sections}
+                </div>
+
+            </article>
+        `;
+
+    }).join("");
+
+    renderComparison(
+        result,
+        people
+    );
+
+    renderActionPlan(
+        result
+    );
+
+    document.getElementById(
+        "subtitle"
+    ).textContent =
+        people.length +
+        " counsellor response(s) generated successfully.";
+}
+
+
+/* =========================================================
+   FORMAT AI TEXT
+========================================================= */
+
+function formatAdviceText(text) {
+
+    if (!text) {
+        return '<span style="color:#7a8498;">No specific information was returned for this section.</span>';
+    }
+
+    const safe =
+        escapeHTML(text);
+
+    /*
+       Convert simple numbered lists into readable HTML
+       while preserving normal sentences.
+    */
+    const numbered =
+        safe
+            .replace(
+                /(?:^|\n)\s*(\d+)[.)]\s+/g,
+                "\n§ITEM§ "
+            )
+            .split("§ITEM§");
+
+    if (numbered.length > 1) {
+
+        const items =
+            numbered
+                .slice(1)
+                .map(
+                    item =>
+                        `<li>${item.trim()}</li>`
+                )
+                .join("");
+
+        return `<ol>${items}</ol>`;
+    }
+
+    /*
+       Convert bullet lines into an unordered list.
+    */
+    const lines =
+        safe.split(/\n+/)
+            .map(line => line.trim())
+            .filter(Boolean);
+
+    if (
+        lines.length > 1 &&
+        lines.every(
+            line =>
+                /^[-•*]\s+/.test(line)
+        )
+    ) {
+
+        return `
+            <ul>
+                ${lines.map(
+                    line =>
+                        `<li>${line.replace(/^[-•*]\s+/, "")}</li>`
+                ).join("")}
+            </ul>
+        `;
+    }
+
+    return safe.replace(
+        /\n+/g,
+        "<br>"
+    );
+}
+
+
+function renderComparison(
+    result,
+    people
+) {
+
+    const aspects = [
+
+        "Key Focus",
+
+        "Top Recommendation",
+
+        "Skills to Develop",
+
+        "Next Steps"
+
+    ];
+
+
+    const rows =
+        aspects
+            .map(
+                aspect => {
+
+                    const comparison =
+                        (result.comparison || [])
+                            .find(
+                                item =>
+                                    item.aspect ===
+                                    aspect
+                            );
+
+
+                    const cells =
+                        people
+                            .map(
+                                persona => {
+
+                                    const value =
+                                        comparison
+                                            ?.values
+                                            ?.find(
+                                                item =>
+                                                    item.personaId ===
+                                                    persona.id
+                                            )
+                                            ?.value ||
+                                        "-";
+
+
+                                    return `
+
+                                        <td>
+                                            ${escapeHTML(
+                                                value
+                                            )}
+                                        </td>
+
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+
+                    return `
+
+                        <tr>
+
+                            <td>
+                                <b>
+                                    ${aspect}
+                                </b>
+                            </td>
+
+                            ${cells}
+
+                        </tr>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    document.getElementById(
+        "table"
+    ).innerHTML = `
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Aspect
+                </th>
+
+                ${people
+                    .map(
+                        persona =>
+                            `<th>
+                                ${escapeHTML(
+                                    persona.short
+                                )}
+                            </th>`
+                    )
+                    .join("")}
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            ${rows}
+
+        </tbody>
+
+    `;
+
+}
+
+
+
+/* =========================================================
+   RENDER ACTION PLAN
+========================================================= */
+
+function renderActionPlan(
+    result
+) {
+
+    const plan =
+        result.actionPlan || [];
+
+
+    if (
+        plan.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "actionGrid"
+    ).innerHTML =
+
+        plan
+            .slice(0, 4)
+            .map(
+                (item, index) => `
+
+                    <div
+                        class="action-item"
+                    >
+
+                        <b>
+                            0${index + 1}
+                            ·
+                            ${escapeHTML(
+                                item.title ||
+                                "Step"
+                            )}
+                        </b>
+
+                        <p>
+                            ${escapeHTML(
+                                item.description ||
+                                ""
+                            )}
+                        </p>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+}
+
+
+
+/* =========================================================
+   COPY SINGLE RESPONSE
+========================================================= */
+
+function copyCard(
+    button
+) {
+
+    const card =
+        button.closest(
+            ".response"
+        );
+
+
+    const text =
+        card
+            .querySelector(
+                ".response-body"
+            )
+            .innerText;
+
+
+    navigator.clipboard
+        .writeText(text)
+        .then(
+            () => {
+
+                const original =
+                    button.textContent;
+
+
+                button.textContent =
+                    "Copied ✓";
+
+
+                setTimeout(
+                    () => {
+
+                        button.textContent =
+                            original;
+
+                    },
+                    1000
+                );
+
+            }
+        )
+        .catch(
+            () => {
+
+                alert(
+                    "Unable to copy."
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   COPY ALL RESPONSES
+========================================================= */
+
+function copyAll() {
+
+    const text =
+        [
+            ...document.querySelectorAll(
+                ".response"
+            )
+        ]
+        .map(
+            card =>
+                card.innerText
+        )
+        .join(
+            "\n\n====================\n\n"
+        );
+
+
+    navigator.clipboard
+        .writeText(text)
+        .then(
+            () => {
+
+                setStatus(
+                    "All career advice copied.",
+                    "ok"
+                );
+
+            }
+        )
+        .catch(
+            () => {
+
+                alert(
+                    "Unable to copy."
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   MAIN GET ADVICE FUNCTION
+========================================================= */
+
+async function getAdvice() {
+
+    const question =
+        document
+            .getElementById(
+                "question"
+            )
+            .value
+            .trim();
+
+
+    /* -----------------------------------------------------
+       Check question
+    ----------------------------------------------------- */
+
+    if (!question) {
+
+        setStatus(
+            "Please enter your career-related question.",
+            "err"
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Check counsellor selection
+    ----------------------------------------------------- */
+
+    if (
+        selected.size === 0
+    ) {
+
+        setStatus(
+            "Please select at least one counsellor.",
+            "err"
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Check API key
+    ----------------------------------------------------- */
+
+    if (
+        !GEMINI_API_KEY ||
+        GEMINI_API_KEY.trim() === "" ||
+        GEMINI_API_KEY ===
+            "PASTE_YOUR_GEMINI_API_KEY_HERE"
+    ) {
+
+        setStatus(
+            "Gemini API key is missing. Add your key to GEMINI_API_KEY.",
+            "err"
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Prepare selected personas
+    ----------------------------------------------------- */
+
+    const people =
+        [...selected]
+            .map(
+                id => ({
+                    id,
+                    ...PERSONAS[id]
+                })
+            );
+
+
+    const button =
+        document.getElementById(
+            "generate"
+        );
+
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+
+    button.disabled =
+        true;
+
+
+    loading
+        .classList
+        .add("show");
+
+
+    setStatus(
+        "Generating career advice..."
+    );
+
+
+    try {
+
+
+        /* -------------------------------------------------
+           ONE API REQUEST
+        ------------------------------------------------- */
+
+        const result =
+            await callGemini(
+                question,
+                people
+            );
+
+
+        /* -------------------------------------------------
+           Render result
+        ------------------------------------------------- */
+
+        renderResponses(
+            result,
+            people
+        );
+
+
+        setStatus(
+            "Career advice generated successfully.",
+            "ok"
+        );
+
+
+        /*
+           Scroll to AI advice
+        */
+
+        document
+            .getElementById(
+                "results"
+            )
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+
+    } catch (error) {
+
+
+        console.error(
+            "Gemini API Error:",
+            error
+        );
+
+
+        setStatus(
+            "API Error: " +
+            error.message,
+            "err"
+        );
+
+
+    } finally {
+
+
+        button.disabled =
+            false;
+
+
+        loading
+            .classList
+            .remove("show");
+
+    }
+
+}
+
+
+
+/* =========================================================
+   INITIALIZE APPLICATION
+========================================================= */
+
+renderPersonas();
+
+updateCounter();
+
+</script>
+
+
+</body>
+
+</html>
